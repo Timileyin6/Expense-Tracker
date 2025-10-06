@@ -1,0 +1,20 @@
+<div class="signUpPage">
+    <div class="signUpContainer">
+        <form [formGroup]= 'signUp' (ngSubmit)="submitData()">
+            <h2 class="signInHead">Sign Up</h2>
+
+            <div class="email"> 
+                <label>First Name<span class="required">*</span></label>
+                <input class="Input" formControlName="firstname" required name="firstname" type="text" placeholder="Enter your first name..." />
+                <label>Last Name<span class="required">*</span></label>
+                <input class="Input" formControlName="lastname" required name="lastname" type="text" placeholder="Enter your last name..." />
+                <label>E-mail<span class="required">*</span></label>
+                <input class="Input" formControlName="email" required name="email" type="email" placeholder="Enter your email..." />
+                <label>Password<span class="required">*</span></label>
+                <input class="Input" formControlName="password" required name="password" type="password" placeholder="Enter your password..." />
+            </div>
+            <button class="signUpButton" [disabled]="signUp.invalid">Sign Up</button>
+            <p class="haveAnAccount">Have an account?<span class="signInLink" routerLink="/logIn">Sign in</span></p>
+        </form>
+    </div>
+</div>

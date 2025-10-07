@@ -11,6 +11,13 @@
                 <label>Password<span class="required">*</span></label>
                 <input class="password Input" name="password" required formControlName="password" type="password" placeholder="Enter your password...." />
             </div>
+            @if(login.invalid && (login.touched || login.dirty)){
+                <div class="errorMessage required">
+                    <p *ngIf="login.get('email')?.touched && login.get('email')?.errors?.['required']">Email is required</p>
+                    <p *ngIf="login.get('email')?.touched && login.get('email')?.errors?.['email']">Enter a valid email</p>
+                    <p *ngIf="login.get('password')?.touched && login.get('password')?.errors?.['required']">Password is required</p>
+                </div>
+            }
             <button [disabled]="login.invalid" class="loginButton">Sign In</button>
             <p class="noAccount">Don't have an account? <span class="signUpLink" routerLink="/signUp">Sign Up</span> </p>
         </form>

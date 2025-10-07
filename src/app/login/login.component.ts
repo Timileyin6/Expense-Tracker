@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../user';
 import { AuthService } from '../auth.service';
@@ -16,7 +16,7 @@ export class LoginComponent {
   public incorrectLogin: boolean = false
   constructor(private formBuider: FormBuilder, private route: Router, private auth: AuthService){
     this.login = this.formBuider.group({
-      email: [''],
+      email: ['', Validators.email],
       password: ['']
     })
   }

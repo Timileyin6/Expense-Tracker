@@ -1,5 +1,5 @@
  .trackerPage{
-    background-color: plum;
+    background-color: #C4C3D0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,12 +11,12 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    max-width: 600px;
+    width: 800px;
     padding: 20px;
 }
 
 .trackerHeader{
-    color: rgb(146, 26, 146);
+    color: #50222D;
     font-weight: bolder;
     font-size: 30px;
     padding-bottom: 7px;
@@ -25,7 +25,7 @@
 }
 
 .trackerSubheading{
-    border-bottom: 1px solid rgb(146, 26, 146);
+    border-bottom: 1px solid #50222D;
     padding-bottom: 10px;
     display: flex;
     justify-content: space-between;
@@ -74,7 +74,7 @@
 }
 
 .income {
-  border-right: 1px solid rgb(146, 26, 146); 
+  border-right: 1px solid #50222D; 
   padding-right: 10px;
 }
 
@@ -91,7 +91,7 @@
 }
 
 .select{
-    border: 1px solid rgb(146, 26, 146);
+    border: 1px solid #50222D;
     padding: 10px;
 }
 
@@ -115,7 +115,7 @@
     border: none;
     margin: 15px 0px;
     width: 100%;
-    background-color: rgb(146, 26, 146);
+    background-color: #50222D;
     color: white;
 }
 
@@ -162,7 +162,7 @@
     width: 100%;
     height: 30px;
     padding: 2px;
-    border-color: rgb(146, 26, 146);
+    border-color: #50222D;
     border-radius: 5px;
     outline: none;
 }

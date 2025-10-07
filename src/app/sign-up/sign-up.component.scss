@@ -1,5 +1,5 @@
 .signUpPage{
-    background-color: plum;
+    background-color: #C4C3D0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,12 +15,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 80%  ;
+    width: 80%;
     max-width: 600px; 
 }
 
+form{
+    width: 70%;
+}
+
+
 .signInHead{
-    color: rgb(146, 26, 146);
+    color: #50222D;
     font-weight: bolder;
     font-size: 30px;
     padding-bottom: 7px;
@@ -39,7 +44,7 @@
     width: 100%;
     height: 30px;
     padding: 2px;
-    border-color: rgb(146, 26, 146);
+    border-color: #50222D;
     border-radius: 5px;
     outline: none;
 }
@@ -52,7 +57,7 @@
     padding: 5px;
     margin: 15px 0px;
     width: 100%;
-    background-color: rgb(146, 26, 146);
+    background-color: #50222D;
     color: white;
     cursor: pointer;
 }
@@ -62,7 +67,7 @@
 }
 
 .signInLink{
-    color: rgb(146, 26, 146);
+    color: #50222D;
     font-weight: bold;
     cursor: pointer;
 }

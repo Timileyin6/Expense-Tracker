@@ -97,14 +97,12 @@ export class TrackerComponent implements OnInit{
     })
   ]);
 
-  // Add table
   autoTable(doc, {
     head: [['Name', 'Category', 'Amount', 'Date']],
     body: tableData,
     startY: 40,
   });
 
-  // Save PDF
   doc.save('transactions.pdf');
 }
 

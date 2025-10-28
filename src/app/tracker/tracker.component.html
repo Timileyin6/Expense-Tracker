@@ -10,17 +10,19 @@
                 <div class="balance">
                     <h5>YOUR BALANCE</h5>
                     <h2 [ngClass]="['actualBalance', colorHandler()]">
-                        {{balanceValue() | currency}} </h2>
+                        {{balanceValue() | currencyConverter | currency: (currentCurrency) : 'symbol' : '1.2-2'}} </h2>
                 </div>
                 <div class="iconsNdSelect">
                 <i class="fa-solid fa-file-pdf point" (click)="downloadPDF()"></i>
                 <i class="fa-solid fa-trash-can point" (click)="deleteAll()"></i>
-                <select class="select">
-                    <option value="canadianDollars">Canadian Dollars</option>
+                <select class="select" (ngModelChange)="onCurrencyChange($event)" [(ngModel)]="currentCurrency" >
+                    <!-- @for(let currency of currencies; track currency){} -->
+                     <option *ngFor="let currency of currencies" [value]="currency.code">{{currency.name}} </option>
+                     <!-- <option value="canadianDollars">Canadian Dollars</option> 
                     <option value="naira">Naira</option>
                     <option value="poundSterling">Pound Sterling</option>
                     <option value="usDollars">United States Dollars</option>
-                    <option value="euro">Euro</option>
+                    <option value="euro">Euro</option>  -->
                 </select>
                 </div>
             </div>
@@ -28,11 +30,11 @@
             <div class="incomeExpense">
                 <div class="income">
                     <h5>INCOME</h5>
-                    <h4 class="actualIncome">{{incomeValue() | currency}} </h4>
+                    <h4 class="actualIncome">{{incomeValue() | currencyConverter | currency: (currentCurrency) : 'symbol' : '1.2-2'}} </h4>
                 </div>
                 <div class="expense">
                     <h5>EXPENSE</h5>
-                    <h4 class="actualExpense">{{expenseValue() | currency}} </h4>
+                    <h4 class="actualExpense">{{expenseValue() | currencyConverter | currency: (currentCurrency) : 'symbol' : '1.2-2'}} </h4>
                 </div>
             </div>
         </div>
@@ -43,7 +45,7 @@
             <div *ngFor="let transaction of transactions()" [ngClass]="['transactionBlock', transaction.category === 'income' ? 'borderGreen' : 'borderRed']">
                 <div class="transactionTop">
                     <p>{{transaction.name | titlecase}} </p>
-                    <p>{{transaction.amount | currency}} </p>
+                    <p>{{transaction.amount | currencyConverter | currency: (currentCurrency) : 'symbol' : '1.2-2'}} </p>
                 </div>
                 <div class="dateNdTrash">
                 <p class="transactionDate">{{transaction.date | date: 'MMM d, y, h:mm:ss a' }} </p>
@@ -62,7 +64,7 @@
            <i class="fa-solid fa-xmark point" (click)="toggleTransactionDetails()"></i>
            </div>
         <div class="email">
-        <label>Name:</label>
+        <label>Name:</label>    
         <input name="transactionName" class="Input" type="text" required formControlName="name" />
         <div class="actualRadio">
         <label>Income:</label>

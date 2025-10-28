@@ -1,31 +1,39 @@
-import { Component, computed, OnInit, signal, Signal, WritableSignal } from '@angular/core';
+import { Component, computed, Inject, inject, OnInit, signal, Signal, WritableSignal } from '@angular/core';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { Transaction } from '../transaction';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { User } from '../user';
 import autoTable from 'jspdf-autotable';
+import { TrackerService } from './tracker.service';
+import { ConvertCurrencyPipe } from './currency-converter.pipe';
 
 @Component({
   selector: 'app-tracker',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, ConvertCurrencyPipe, FormsModule, ReactiveFormsModule],
   templateUrl: './tracker.component.html',
   styleUrl: './tracker.component.scss'
 })
 export class TrackerComponent implements OnInit{
+   private trackerService = inject(TrackerService);
+
   public transactions: WritableSignal<Transaction[]> = signal<Transaction[]>([])
   public enterTransactionDetails: boolean = false
   public transactionDetails: FormGroup;
   public user: any
   public userKey: string = ''
+
   public incomeValue: Signal<number> = computed(()=>this.transactions().reduce((sum,transaction)=>transaction.category==='income' ? sum+transaction.amount : sum, 0) )
   public expenseValue: Signal<number> = computed(()=> this.transactions().reduce((sum, tranaction)=>tranaction.category==='expense'? sum+tranaction.amount : sum,0))
   public balanceValue: Signal<number> = computed(()=> this.incomeValue() -this.expenseValue())
   public colorHandler: Signal<string> = computed(()=>this.balanceValue()>=0 ?'actualIncome' : 'actualExpense')
+
+  public  currencies : {code: string, name: any}[] = [];
+  public currentCurrency = 'USD';
 
   public addNewTransaction(){
     const newTransaction = this.transactionDetails.value
@@ -52,6 +60,9 @@ export class TrackerComponent implements OnInit{
       console.log(`welcome ${this.user.firstName}`)
        this.userKey = `${this.user.email}_transactions`
        const transactionLocalData = localStorage.getItem(this.userKey)
+       this.getCurrencies();
+       this.getCurrentCurrency();
+       this.trackerService.fetchAvailableCurrencies();
       if(transactionLocalData){
         this.transactions.set(JSON.parse(transactionLocalData))
       }
@@ -60,6 +71,27 @@ export class TrackerComponent implements OnInit{
 
   public toggleTransactionDetails(): void{
       this.enterTransactionDetails = !this.enterTransactionDetails
+  }
+
+  
+
+  public getCurrencies(){
+    this.trackerService.getAvailableCurrencies().subscribe(
+      (currencies : any) => {
+        this.currencies = Object.entries(currencies).map(([code,name]) => ({code, name}))
+      }
+    )
+  }
+
+  public getCurrentCurrency(){
+    this.trackerService.getCurrency().subscribe(
+      (c :any) => {this.currentCurrency = c}
+    );
+  }
+
+  public onCurrencyChange(event: any){
+    console.log('Currency changed:', event);
+    this.trackerService.setCurrency(event);
   }
 
   public deleteTransaction(transactionId: number): void{
